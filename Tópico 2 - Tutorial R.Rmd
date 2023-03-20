@@ -1,0 +1,73 @@
+---
+title: "Tópico 2 - Tutorial R"
+author: "Caique Machado e Silva"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+Procure um tutorial do R (página da web,  vídeo no Youtube, arquivo em pdf), leia-o ou assista-o, e teste-o dentro do seu próprio arquivo R Markdown no RStudio. Aproveite para aprender mais sobre a linguagem que mais utilizaremos nas análises daqui para frente. Neste fórum:
+
+compartilhe o link do material que você encontrou e nos diga sua impressão sobre o material (se você o recomenda ou não, se há algo novo que você aprendeu com o tutorial, etc.)
+
+-----------------------------------------------------------------------------
+Tutorial: Como fazer mapas no R com ggplot2
+
+Link: https://www.youtube.com/watch?v=DIyNotrgpr0&ab_channel=EpidemioForadaCurva
+
+-----------------------------------------------------------------------------
+#Pacotes
+```{r}
+library(tidyverse)
+install.packages("rnaturalearth")
+library(rnaturalearth)
+install.packages("devtools")
+devtools::install_github("AndySouth/rnaturalearthhires")
+library("rnaturalearthhires")
+```
+
+#Baixar arquivos de mapa
+```{r}
+BRA <- ne_states(
+  country = "Brazil",
+  returnclass = "sf"
+)
+
+plot(BRA)
+```
+
+#Extraindo o estado Minas Gerais
+```{r}
+MG <- BRA[BRA$name_en == "Minas Gerais", ]
+
+plot(MG)
+```
+
+#Inserindo coordenadas
+```{r}
+city <- c("VIçosa", "São Gotardo", "Sete Lagoas", "Itutinga", "Lambari")
+lat <- c(-20.7546, -19.3074, -19.4679, -21.2983, -21.9671)
+lon <- c(-42.8825,-46.0561, -44.2477, -44.66,  -45.3466)
+
+dat <- data.frame(city, lat, lon)
+
+```
+
+#Criando o mapa
+```{r}
+ggplot()+
+  geom_sf(data = BRA, fill = "white")+
+  geom_sf(data = MG,  fill = "gray")+
+  geom_point(data = dat,
+             aes(x = lon, y = lat, color = city))+
+  theme_light()+
+  labs(x = "Longitude",
+       y = "Latitude",
+       color = "Cidade")+
+  ylim(-25, -10)+
+  xlim(-55, -40)
+
+```
