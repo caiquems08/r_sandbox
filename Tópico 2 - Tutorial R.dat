@@ -1,12 +1,8 @@
 ---
 title: "Tópico 2 - Tutorial R"
 author: "Caique Machado e Silva"
-date: "`r Sys.Date()`"
-output:
-  html_document: default
-  pdf_document: default
-editor_options:
-  chunk_output_type: console
+date: "20/03/2023"
+output: html_document
 ---
 
 Procure um tutorial do R (página da web,  vídeo no Youtube, arquivo em pdf), leia-o ou assista-o, e teste-o dentro do seu próprio arquivo R Markdown no RStudio. Aproveite para aprender mais sobre a linguagem que mais utilizaremos nas análises daqui para frente. Neste fórum:
@@ -22,8 +18,11 @@ Link: https://www.youtube.com/watch?v=DIyNotrgpr0&ab_channel=EpidemioForadaCurva
 #Pacotes
 ```{r}
 library(tidyverse)
+install.packages("rnaturalearth")
 library(rnaturalearth)
-library(rnaturalearthhires)
+install.packages("devtools")
+devtools::install_github("AndySouth/rnaturalearthhires")
+library("rnaturalearthhires")
 ```
 
 #Baixar arquivos de mapa
